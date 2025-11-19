@@ -1,5 +1,9 @@
 :root {
     --accent-color: #800000;
+    /* Step 11: Add variables for menu colors */
+    --menu-light: white;
+    --menu-mid: antiquewhite;
+    --menu-dark: black;
 }
 
 * {
@@ -10,10 +14,12 @@
 
 body {
     width: 80%;
+    max-width: 1024px;
     margin: auto;
     border: 2px solid var(--accent-color);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 100%;
+    font-size: 90% + .2vw;
+    line-height: 1.5;
 }
 
 a:focus, a:hover {
@@ -22,8 +28,8 @@ a:focus, a:hover {
 }
 
 h1, h2, h3, h4, h5, h6, p, ul {
-    padding-top: .5em;
-    padding-bottom: .5em;
+    padding-top: .25em;
+    padding-bottom: .25em;
 }
 
 ul {
@@ -46,6 +52,7 @@ h3 {
 header {
     border-bottom: 2px solid var(--accent-color);
     background-image: linear-gradient(30deg, #f6bb73 0%, white 30%, white 65%, #f6bb73 100%);
+    line-height: 1.2;
 }
 
 header h2 {
@@ -62,18 +69,56 @@ header h3 {
 header img {
     float: left;
     margin: .75em 1em;
+    width: 100%;
+    min-width: 40px;
+    max-width: 80px;
 }
 
+/* Step 9: Enhance the style rule for the <main> element */
 main {
     clear: left;
-    padding-right: 1em;
-    padding-left: 1em;
     padding-bottom: 1em;
+    display: flex;
+    flex-direction: row;
 }
 
-main h1 {
+/* Flexbox column sizes (Chapter 6) */
+aside {
+    flex-basis: 25%;
+    padding: 1em 10px 1em 0;
+}
+
+section {
+    flex-basis: 75%;
+    padding: 1em 0 1em 10px;
+    border-left: 1px solid #ccc;
+}
+
+/* Featured article styling (Chapter 6) */
+.featured {
     border-top: 2px solid var(--accent-color);
     border-bottom: 2px solid var(--accent-color);
+    padding: .5em 0;
+    margin-bottom: 1em;
+}
+
+section article img {
+    float: right;
+    margin: 0 0 10px 15px;
+}
+
+section article img {
+    width: 60%;
+    min-width: 100px;
+    max-width: 250px;
+}
+
+aside img {
+    border: 4px double var(--accent-color);
+    border-radius: 10px;
+    width: 80%;
+    min-width: 40px;
+    max-width: 75px;
 }
 
 main img {
@@ -98,4 +143,93 @@ footer p {
     padding-bottom: 1em;
 }
 
-.large
+/* --- Chapter 7: Navigation Menu CSS --- */
+
+/* Step 12: Add style rule for the navbar class */
+.navbar {
+    background-color: var(--accent-color);
+}
+
+/* Step 8: Style rule for the menu class (Flexbox) */
+.menu {
+    /* Step 12: Remove bullets, margins, and padding */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    /* Flexbox for horizontal display and wrapping */
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on small screens */
+}
+
+/* Step 9 & 15: Nested style rule for <li> element */
+.menu > li {
+    flex-basis: 20%; /* Each item takes 20% width */
+    text-align: center; /* Step 15: Center the text in the menu items */
+}
+
+/* Step 12 & 14: Nested style rule for <a> element */
+.navbar a {
+    /* Step 12: General styling */
+    display: block; /* Display as block for padding/height */
+    padding: 1em;
+    text-decoration: none; /* Remove underline */
+    color: var(--menu-light); /* Set text color to light menu color */
+
+    /* Step 14: Add margin for space around menu items */
+    margin: 0 1px 2px; /* top: 0, left/right: 1px, bottom: 2px */
+}
+
+/* Step 19: Remove extra space from the left and right sides */
+.menu > li:first-child a { 
+    margin-left: 0; 
+}
+.menu > li:last-child a { 
+    margin-right: 0; 
+}
+
+/* Step 12: :hover, :focus, and .current pseudo-classes */
+.navbar a:hover,
+.navbar a:focus,
+.navbar .current {
+    background-color: var(--menu-mid); /* Set background to mid color */
+    color: var(--menu-dark); /* Set text color to dark menu color */
+}
+
+/* --- Submenu CSS --- */
+
+/* Step 5: Style rule for menu item containing the submenu */
+.has-submenu {
+    position: relative; /* Set position to relative */
+}
+
+/* Step 6: Nested style rule for <small> element */
+.has-submenu small {
+    margin-left: .5em; /* Add space between link text and symbol */
+}
+
+/* Step 9 & 10: Style rule for the submenu class */
+.submenu {
+    position: absolute; /* Set position to absolute */
+    left: 0; /* Set left to 0 */
+    right: 0; /* Set right to 0 */
+    
+    /* Step 11 & 12: Set colors */
+    background-color: var(--accent-color);
+    color: var(--menu-light);
+    
+    /* Step 13: Hide the submenu initially */
+    display: none;
+    
+    z-index: 100; /* Ensure submenu displays over other content */
+}
+
+/* Step 7 & 8: Rule to display submenu on hover */
+.has-submenu:hover > .submenu {
+    display: block; /* Show submenu when parent li is hovered */
+}
+
+/* Step 18: Match submenu item borders/margins to main menu items */
+.submenu > li a {
+    margin: 0 2px 2px; /* top: 0, left/right: 2px, bottom: 2px */
+}
