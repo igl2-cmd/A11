@@ -4,6 +4,11 @@
     --menu-light: white;
     --menu-mid: antiquewhite;
     --menu-dark: black;
+    /* Chapter 8 Variables */
+    --hamburger-symbol: "\2261"; /* Hamburger icon */
+    --close-symbol: "\00d7";     /* Close (X) symbol */
+    --right-triangle: "\25B6";   /* Right-pointing triangle */
+    --down-triangle: "\25BC";    /* Down-pointing triangle */
 }
 
 * {
@@ -12,9 +17,13 @@
     box-sizing: border-box;
 }
 
+/* --- MOBILE-FIRST CSS (Default Styles: 1-Column Layout, Vertical Menu) --- */
+
+/* Step 37: Body element adjusted for mobile-first */
 body {
-    width: 80%;
-    max-width: 1024px;
+    /* Step 37: Set width to 100% for mobile-first */
+    width: 100%;
+    /* max-width removed here, will be in media query */
     margin: auto;
     border: 2px solid var(--accent-color);
     font-family: Arial, Helvetica, sans-serif;
@@ -49,10 +58,19 @@ h3 {
     font-size: 105%;
 }
 
+/* --- Header Mobile (Steps 37, 38) --- */
 header {
     border-bottom: 2px solid var(--accent-color);
     background-image: linear-gradient(30deg, #f6bb73 0%, white 30%, white 65%, #f6bb73 100%);
     line-height: 1.2;
+    /* Step 37: Set text-align to center */
+    text-align: center;
+}
+
+/* Step 37: Nested image must be set to none */
+header img {
+    /* Step 37: Delete declarations and set display to none */
+    display: none;
 }
 
 header h2 {
@@ -66,170 +84,267 @@ header h3 {
     padding-bottom: 1em;
 }
 
-header img {
-    float: left;
-    margin: .75em 1em;
-    width: 100%;
-    min-width: 40px;
-    max-width: 80px;
-}
-
-/* Step 9: Enhance the style rule for the <main> element */
+/* --- Layout Mobile (Steps 7, 8, 10) --- */
 main {
     clear: left;
     padding-bottom: 1em;
+    /* Step 7: Set flex-direction to column-reverse */
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
 }
 
-/* Flexbox column sizes (Chapter 6) */
+/* Step 8: Delete flex-basis properties */
 aside {
-    flex-basis: 25%;
-    padding: 1em 10px 1em 0;
+    /* Deleted flex-basis */
+    padding: 1em 10px 1em 10px; 
 }
 
 section {
-    flex-basis: 75%;
-    padding: 1em 0 1em 10px;
-    border-left: 1px solid #ccc;
+    /* Deleted flex-basis */
+    padding: 1em 10px 1em 10px;
+    /* Step 10: Add border to the bottom */
+    border-bottom: 1px solid #ccc;
+    /* Remove the Chapter 6 border-left */
+    border-left: none; 
 }
 
-/* Featured article styling (Chapter 6) */
-.featured {
-    border-top: 2px solid var(--accent-color);
-    border-bottom: 2px solid var(--accent-color);
-    padding: .5em 0;
-    margin-bottom: 1em;
+/* Image scaling styles from Chapter 6 removed from mobile-first, moved to media query */
+/* Floating image is also mobile-first, but we'll leave it as is for the article */
+
+/* --- Navigation Mobile (Steps 16, 17, 18, 19, 20, 33) --- */
+
+/* Step 19: Hide the checkbox */
+#menu-toggle {
+    display: none;
 }
 
-section article img {
-    float: right;
-    margin: 0 0 10px 15px;
-}
-
-section article img {
-    width: 60%;
-    min-width: 100px;
-    max-width: 250px;
-}
-
-aside img {
-    border: 4px double var(--accent-color);
-    border-radius: 10px;
-    width: 80%;
-    min-width: 40px;
-    max-width: 75px;
-}
-
-main img {
-    border: 4px double var(--accent-color);
-    border-radius: 10px;
-}
-
-blockquote {
-    font-style: italic;
-    padding-left: 2em;
-    padding-right: 2em;
-}
-
-footer {
-    background-color: var(--accent-color);
-}
-
-footer p {
-    text-align: center;
-    color: white;
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-/* --- Chapter 7: Navigation Menu CSS --- */
-
-/* Step 12: Add style rule for the navbar class */
+/* Step 16: Modify style rule for navbar */
 .navbar {
     background-color: var(--accent-color);
+    position: relative; /* Step 16: Set position to relative */
 }
 
-/* Step 8: Style rule for the menu class (Flexbox) */
+/* Step 18: Format the menu button (label) and add the hamburger symbol */
+.menu-btn {
+    display: block;
+    cursor: pointer;
+    background-color: var(--accent-color);
+    padding: 1em;
+    color: var(--menu-light);
+    font-size: 1.5em;
+    width: 40px; 
+    text-align: center;
+    float: right;
+    margin-right: 1em;
+}
+
+/* Step 18: Add the hamburger symbol */
+.menu-btn::before {
+    content: var(--hamburger-symbol);
+}
+
+/* Step 20: Change hamburger to close symbol when checkbox is checked */
+#menu-toggle:checked + .menu-btn::before {
+    content: var(--close-symbol);
+}
+
+/* Step 17: Delete all declarations from menu, set position, left, background, width, display */
 .menu {
-    /* Step 12: Remove bullets, margins, and padding */
     list-style-type: none;
     margin: 0;
     padding: 0;
-
-    /* Flexbox for horizontal display and wrapping */
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping on small screens */
-}
-
-/* Step 9 & 15: Nested style rule for <li> element */
-.menu > li {
-    flex-basis: 20%; /* Each item takes 20% width */
-    text-align: center; /* Step 15: Center the text in the menu items */
-}
-
-/* Step 12 & 14: Nested style rule for <a> element */
-.navbar a {
-    /* Step 12: General styling */
-    display: block; /* Display as block for padding/height */
-    padding: 1em;
-    text-decoration: none; /* Remove underline */
-    color: var(--menu-light); /* Set text color to light menu color */
-
-    /* Step 14: Add margin for space around menu items */
-    margin: 0 1px 2px; /* top: 0, left/right: 1px, bottom: 2px */
-}
-
-/* Step 19: Remove extra space from the left and right sides */
-.menu > li:first-child a { 
-    margin-left: 0; 
-}
-.menu > li:last-child a { 
-    margin-right: 0; 
-}
-
-/* Step 12: :hover, :focus, and .current pseudo-classes */
-.navbar a:hover,
-.navbar a:focus,
-.navbar .current {
-    background-color: var(--menu-mid); /* Set background to mid color */
-    color: var(--menu-dark); /* Set text color to dark menu color */
-}
-
-/* --- Submenu CSS --- */
-
-/* Step 5: Style rule for menu item containing the submenu */
-.has-submenu {
-    position: relative; /* Set position to relative */
-}
-
-/* Step 6: Nested style rule for <small> element */
-.has-submenu small {
-    margin-left: .5em; /* Add space between link text and symbol */
-}
-
-/* Step 9 & 10: Style rule for the submenu class */
-.submenu {
-    position: absolute; /* Set position to absolute */
-    left: 0; /* Set left to 0 */
-    right: 0; /* Set right to 0 */
     
-    /* Step 11 & 12: Set colors */
+    position: absolute; /* Step 17 */
+    left: 0; /* Step 17 */
+    background-color: var(--accent-color); /* Step 17 */
+    width: 40%; /* Step 17 */
+    display: none; /* Step 17: Hide the menu by default */
+}
+
+/* Step 20: Display menu when checkbox is checked */
+#menu-toggle:checked ~ .menu {
+    display: block;
+}
+
+/* Step 33: Set margin for nested <a> element in the navbar class */
+.navbar a {
+    display: block;
+    padding: 1em;
+    text-decoration: none;
+    color: var(--menu-light);
+    /* Step 33: Set margin to 0 2px 2px 0 */
+    margin: 0 2px 2px 0;
+}
+
+/* Step 33: Set margin for nested <a> element in the submenu class */
+.submenu > li a {
+    margin: 2px; /* Step 33: Set margin to 2px */
+}
+
+/* --- Submenu Mobile (Steps 29, 30) --- */
+
+/* No change to .has-submenu (position: relative) */
+
+/* Step 29: Modify submenu class for mobile */
+.submenu {
+    list-style-type: none;
+    
+    /* Set colors */
     background-color: var(--accent-color);
     color: var(--menu-light);
     
-    /* Step 13: Hide the submenu initially */
-    display: none;
-    
-    z-index: 100; /* Ensure submenu displays over other content */
+    /* Step 30: Set top, left, width, and delete right */
+    position: absolute;
+    top: 0; /* Step 30: Set top to 0 */
+    left: 100%; /* Step 30: Set left to 100% */
+    width: 100%; /* Step 30: Set width to 100% */
+    /* Right property deleted */
+
+    display: none; /* Hide by default */
 }
 
-/* Step 7 & 8: Rule to display submenu on hover */
+/* Step 29: Nested style rule that displays a right pointing triangle symbol */
+.has-submenu > a::after {
+    content: var(--right-triangle);
+    margin-left: 0.5em;
+    font-size: 0.7em;
+}
+
+/* Rule to display submenu on hover (remains the same for mobile/desktop) */
 .has-submenu:hover > .submenu {
-    display: block; /* Show submenu when parent li is hovered */
+    display: block;
 }
 
-/* Step 18: Match submenu item borders/margins to main menu items */
-.submenu > li a {
-    margin: 0 2px 2px; /* top: 0, left/right: 2px, bottom: 2px */
+
+/* --- LARGER SCREEN CSS (Media Queries) --- */
+
+/* Layout Breakpoint (Assumed 768px for 2-column layout) */
+@media screen and (min-width: 768px) {
+    
+    /* Step 36: Header styles */
+    header {
+        /* Step 36: Set text-align property to left */
+        text-align: left;
+    }
+    
+    /* Step 36: Nested image styles */
+    header img {
+        display: block; /* Step 36: Set display of nested image to block */
+        /* Retain old Chapter 6 styles */
+        float: left;
+        margin: .75em 1em;
+        width: 100%;
+        min-width: 40px;
+        max-width: 80px;
+    }
+    
+    /* Step 4 & 5: Main element rules */
+    main {
+        flex-direction: row; /* Step 5: Set flex-direction to row */
+        /* Delete all other declarations */
+    }
+    
+    /* Step 4 & 6: Aside and Section rules */
+    aside {
+        /* Step 6: Delete all properties except flex-basis */
+        flex-basis: 25%; 
+        padding: 1em 10px 1em 0; /* Added back padding for spacing */
+    }
+    
+    section {
+        /* Step 6: Delete all properties except flex-basis */
+        flex-basis: 75%; 
+        border-left: 1px solid #ccc; /* Added back border-left */
+        border-bottom: none; /* Step 10: Remove the border-bottom */
+        padding: 1em 0 1em 10px; /* Added back padding for spacing */
+    }
+
+    /* Chapter 6/Step 17: Restore responsive body width */
+    body {
+        width: 80%;
+        max-width: 1024px;
+    }
+
+    /* Restore image scaling styles here */
+    section article img {
+        width: 60%; 
+        min-width: 100px;
+        max-width: 250px;
+    }
+
+    aside img {
+        width: 80%; 
+        min-width: 40px;
+        max-width: 75px;
+    }
+}
+
+/* Navigation Breakpoint (Assumed 600px for horizontal menu) */
+@media screen and (min-width: 600px) {
+
+    /* Step 15: Hide the mobile menu button on large screens */
+    .menu-btn {
+        display: none;
+    }
+
+    /* Step 23: Ensure the menu displays horizontally */
+    .menu {
+        display: flex !important; /* Step 23: Force horizontal display */
+        flex-direction: row; /* Ensure row direction */
+        
+        /* Step 14: Delete flex-wrap property, set position to relative, width to 100% */
+        flex-wrap: nowrap; /* Delete flex-wrap */
+        position: relative; /* Step 14 */
+        width: 100%; /* Step 14 */
+        
+        /* Step 17 Fix: Ensure menu is visible and overrides display: none */
+        display: flex;
+    }
+    
+    /* Step 14: Restore original item sizing */
+    .menu > li {
+        flex-basis: 20%;
+    }
+
+    /* Step 32: Move margin removal from mobile-first CSS */
+    .menu > li:first-child a { 
+        margin-left: 0; 
+    }
+    .menu > li:last-child a { 
+        margin-right: 0; 
+    }
+
+    /* Step 32: Copy navbar class style rule (nested <a> margin) */
+    .navbar a {
+        /* Delete everything but the margin property in the nested style rule for <a> elements */
+        margin: 0 1px 2px; 
+    }
+
+
+    /* --- Submenu Desktop (Steps 26, 27, 28) --- */
+
+    /* Step 26: Copy the style rule for the list item that has a submenu */
+    .has-submenu {
+        position: relative;
+    }
+    
+    /* Step 26 & 28: Submenu class styles */
+    .submenu {
+        /* Step 28: Delete all but left and right properties */
+        left: 0;
+        right: 0;
+        top: auto; /* Step 28: Set top property to auto */
+
+        /* Restore necessary desktop styles */
+        display: none;
+        background-color: var(--accent-color);
+        color: var(--menu-light);
+    }
+    
+    /* Step 27: Change nested style rule to display a down pointing triangle symbol */
+    .has-submenu > a::after {
+        content: var(--down-triangle);
+        margin-left: 0.5em;
+        font-size: 0.7em;
+    }
 }
